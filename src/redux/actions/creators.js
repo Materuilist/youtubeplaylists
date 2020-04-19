@@ -5,10 +5,10 @@ import {
   SET_SEARCH_RESULTS,
 } from "./types";
 
-export function setPlaylist(playlistName) {
+export function setPlaylist(playlistId) {
   return {
     type: SET_PLAYLIST,
-    playlistName,
+    playlistId,
   };
 }
 export function toggleLoading() {
@@ -19,7 +19,7 @@ export function toggleLoading() {
 export function setDate(date) {
   return {
     type: SET_DATE,
-    date: date,
+    date,
   };
 }
 
@@ -30,8 +30,11 @@ export function setSearchResults(searchResults) {
   };
 }
 
-export function fetchPlaylists(playlistName, date) {
+export function fetchPlaylists(playlistName, delay) {
   return async (dispatch, getState) => {
+    const date = Date.now();
+    dispatch(setDate(date));
+    await new Promise((resolve) => setTimeout(() => resolve(), delay));
     const { loading, timestamp } = getState().searchResults;
     //устаревший запрос
     if(date<timestamp){

@@ -1,30 +1,37 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 
-import { fetchPlaylists, setDate } from "../../../../redux/actions/creators";
+import {
+  fetchPlaylists,
+  setPlaylist,
+} from "../../../../redux/actions/creators";
 
 import cssClasses from "./Search.module.css";
 import Dropdown from "./Dropdown/Dropdown";
 
 const INPUT_DELAY = 1000;
 
-function Search({ fetchPlaylists, setDate }) {
+function Search({ fetchPlaylists, setPlaylist }) {
   const searchInput = useRef();
+  const [dropdownIsShown, toggleDropdownVisibility] = useState(false);
 
   const inputHandler = async (event) => {
-    const date = Date.now();
-    setDate(date);
-    const playlistName = event.target.value;
-    await new Promise((resolve) => setTimeout(() => resolve(), INPUT_DELAY));
-    fetchPlaylists(playlistName, date);
+    fetchPlaylists(event.target.value);
+  };
+
+  const inputClickedHandler = (event) => {
+    searchInput.current.focus();
+    toggleDropdownVisibility(!dropdownIsShown);
+  };
+
+  const choiceMadeHandler = (playlistId) => {
+    toggleDropdownVisibility(false);
+    setPlaylist(playlistId);
   };
 
   return (
     <div className={cssClasses.SearchContainer}>
-      <div
-        onClick={() => searchInput.current.focus()}
-        className={cssClasses.Search}
-      >
+      <div onClick={inputClickedHandler} className={cssClasses.Search}>
         <span className={cssClasses.SearchIcon}>&#9906;</span>{" "}
         <input
           onInput={inputHandler}
@@ -34,15 +41,18 @@ function Search({ fetchPlaylists, setDate }) {
           placeholder="enter playlist's name..."
         />
       </div>
-      <Dropdown/>
+      <Dropdown
+        show={dropdownIsShown}
+        choiceMadeHandler={choiceMadeHandler}
+      />
     </div>
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchPlaylists: (playlistName, date) =>
-    dispatch(fetchPlaylists(playlistName, date)),
-  setDate: (date) => dispatch(setDate(date)),
+  fetchPlaylists: (playlistName) =>
+    dispatch(fetchPlaylists(playlistName, INPUT_DELAY)),
+  setPlaylist: (playlistId) => dispatch(setPlaylist(playlistId)),
 });
 
 export default connect(null, mapDispatchToProps)(Search);

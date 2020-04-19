@@ -21,3 +21,8 @@
     color:#fd0404;
     text-transform: uppercase;
 }
+
+.Dropdown li.Unclickable:hover{
+  color: #eb6565;
+  text-transform: none;
+}

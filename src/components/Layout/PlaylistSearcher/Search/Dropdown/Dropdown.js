@@ -1,31 +1,32 @@
 import React from "react";
 import { connect } from "react-redux";
-
-import { setPlaylist } from "../../../../../redux/actions/creators";
+import CSSTransition from "react-transition-group/CSSTransition";
 
 import cssClasses from "./Dropdown.module.css";
 
-function Dropdown({ playlists, setPlaylist }) {
+function Dropdown({ playlists, choiceMadeHandler, show }) {
   return (
-    <ul className={cssClasses.Dropdown}>
-      {playlists.length !== 0 ? (
-        playlists.map(({title, key}) => <li key={key}>{title}</li>)
-      ) : (
-        <li>No matches found...</li>
-      )}
-    </ul>
+    <CSSTransition in={show} timeout={0} mountOnEnter unmountOnExit>
+      <ul className={cssClasses.Dropdown}>
+        {playlists.length !== 0 ? (
+          playlists.map(({ title, key }) => (
+            <li onClick={choiceMadeHandler.bind(null, key)} key={key}>
+              {title}
+            </li>
+          ))
+        ) : (
+          <li className={cssClasses.Unclickable}>No matches found...</li>
+        )}
+      </ul>
+    </CSSTransition>
   );
 }
 
 const mapStateToProps = (state) => ({
   playlists: state.searchResults.data.map((playlist) => ({
     title: playlist.snippet.title,
-    key: playlist.snippet.channelTitle+playlist.snippet.title,
+    key: playlist.id.playlistId,
   })),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setPlaylist: (playlistName) => dispatch(setPlaylist(playlistName)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dropdown);
+export default connect(mapStateToProps)(Dropdown);
