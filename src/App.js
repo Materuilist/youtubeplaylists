@@ -5,7 +5,6 @@ import PlaylistSearcher from './components/Layout/PlaylistSearcher/PlaylistSearc
 
 function App() {
   return (
-    //#65ebeb
     <div className={cssClasses.App}>
       <PlaylistSearcher/>
     </div>
