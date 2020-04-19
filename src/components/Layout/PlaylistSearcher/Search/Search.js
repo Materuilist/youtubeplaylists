@@ -1,19 +1,21 @@
 import React, { useRef } from "react";
 import { connect } from "react-redux";
 
-import { fetchPlaylists } from "../../../../redux/actions/creators";
+import { fetchPlaylists, setDate } from "../../../../redux/actions/creators";
 
 import cssClasses from "./Search.module.css";
 
 const INPUT_DELAY = 1000;
 
-function Search({ fetchPlaylists }) {
+function Search({ fetchPlaylists, setDate }) {
   const searchInput = useRef();
 
   const inputHandler = async (event) => {
+    const date = Date.now();
+    setDate(date);
     const playlistName = event.target.value;
-    await new Promise((resolve)=>setTimeout(()=>resolve(), INPUT_DELAY));
-    fetchPlaylists(playlistName);
+    await new Promise((resolve) => setTimeout(() => resolve(), INPUT_DELAY));
+    fetchPlaylists(playlistName, date);
   };
 
   return (
@@ -34,7 +36,8 @@ function Search({ fetchPlaylists }) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchPlaylists: (playlistName) => dispatch(fetchPlaylists(playlistName)),
+  fetchPlaylists: (playlistName, date) => dispatch(fetchPlaylists(playlistName, date)),
+  setDate: (date) => dispatch(setDate(date)),
 });
 
 export default connect(null, mapDispatchToProps)(Search);

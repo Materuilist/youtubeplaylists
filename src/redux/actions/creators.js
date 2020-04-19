@@ -5,9 +5,6 @@ import {
   SET_SEARCH_RESULTS,
 } from "./types";
 
-const BACKEND_WITH_KEY =
-  "https://www.googleapis.com/youtube/v3/playlists?key=AIzaSyDAhOBa7cZ-KrkW2hAWoBsOBVqVBZ52lHo&part=snippet";
-
 export function setPlaylist(playlistName) {
   return {
     type: SET_PLAYLIST,
@@ -19,10 +16,10 @@ export function toggleLoading() {
     type: TOGGLE_LOADING,
   };
 }
-export function setDate() {
+export function setDate(date) {
   return {
     type: SET_DATE,
-    date: Date.now(),
+    date: date,
   };
 }
 
@@ -33,10 +30,13 @@ export function setSearchResults(searchResults) {
   };
 }
 
-export function fetchPlaylists(playlistName) {
+export function fetchPlaylists(playlistName, date) {
   return async (dispatch, getState) => {
-    dispatch(setDate());
-    const { loading } = getState().searchResults;
+    const { loading, timestamp } = getState().searchResults;
+    //устаревший запрос
+    if(date<timestamp){
+        return;
+    }
     if (!loading) {
       dispatch(toggleLoading());
     }
@@ -46,5 +46,6 @@ export function fetchPlaylists(playlistName) {
     );
     const searchResults = await res.json();
     dispatch(setSearchResults(searchResults.items));
+    dispatch(toggleLoading());
   };
 }
