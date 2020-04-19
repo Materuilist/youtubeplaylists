@@ -1,10 +1,15 @@
-.Search {
-  width: 30%;
+.SearchContainer{
+  position: relative;
+  width: 50%;
   margin: 0 auto;
+}
+
+.Search {
+  width: 100%;
   padding: 1rem;
-  border: 0.9px solid #65ebeb;
+  border: 2px solid #65ebeb;
   background-color: #65ebeb;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
   outline: none;
   cursor: text;
   color: #eb6565;
