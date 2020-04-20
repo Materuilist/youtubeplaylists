@@ -30,6 +30,7 @@
   background-color: transparent;
   outline: none;
   border: none;
+  font-size: .7em;
 }
 
 ::-webkit-input-placeholder {

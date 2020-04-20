@@ -2,3 +2,9 @@
     width: 50%;
     margin: 0 auto;
 }
+
+.Title{
+    text-align: center;
+    font-size: 1.25rem;
+    color: #65ebeb;
+}

@@ -10,14 +10,13 @@ export default ({data})=>{
         height={400}
         data={data}
         margin={{
-          top: 10, right: 30, left: 30, bottom: 0,
+          top: 0, right: 0, left: 0, bottom: 0,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="x" />
-        <YAxis type="number" allowDataOverflow={true} />
+        <XAxis dataKey="x" stroke="#65ebeb"/>
+        <YAxis hide type="number" allowDataOverflow={true} />
         <Tooltip />
-        <Area type="monotone" dataKey="y" stroke="#8884d8" fill="#8884d8" />
+        <Area type="monotone" dataKey="y" stroke="#65ebeb" fill="#65ebeb" />
       </AreaChart>
     );
 }

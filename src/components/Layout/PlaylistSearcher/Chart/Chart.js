@@ -15,7 +15,7 @@ function Chart({ playlist }) {
         <Spinner />
       ) : (
         <React.Fragment>
-          <p>{playlist.title}</p>
+          <p className={cssClasses.Title}>{playlist.title}</p>
           <div className={cssClasses.Graph}>
             <Graph
               data={playlist.views.map((view, index) => ({
