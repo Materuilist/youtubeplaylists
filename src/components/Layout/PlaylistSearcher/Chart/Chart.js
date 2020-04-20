@@ -1,9 +1,18 @@
-import React  from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 
-export default function(){
-    return(
-        <div>
-            Chart
-        </div>
-    )
+// import {  } from '../../../../redux/actions/creators';
+
+import cssClasses from './Chart.module.css';
+
+function Chart({}){
+    return(<div className={cssClasses.Chart}>
+
+    </div>)
 }
+
+const mapStateToProps=state=>({
+    playlist:state.searchResults.active
+})
+
+export default connect(mapStateToProps)(Chart);

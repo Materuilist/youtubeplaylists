@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import {
   fetchPlaylists,
-  setPlaylist,
+  fetchPlaylistItems,
 } from "../../../../redux/actions/creators";
 
 import cssClasses from "./Search.module.css";
@@ -11,7 +11,7 @@ import Dropdown from "./Dropdown/Dropdown";
 
 const INPUT_DELAY = 1000;
 
-function Search({ fetchPlaylists, setPlaylist }) {
+function Search({ fetchPlaylists, fetchPlaylistItems }) {
   const searchInput = useRef();
   const [dropdownIsShown, toggleDropdownVisibility] = useState(false);
 
@@ -26,7 +26,7 @@ function Search({ fetchPlaylists, setPlaylist }) {
 
   const choiceMadeHandler = (playlistId) => {
     toggleDropdownVisibility(false);
-    setPlaylist(playlistId);
+    fetchPlaylistItems(playlistId);
   };
 
   return (
@@ -52,7 +52,7 @@ function Search({ fetchPlaylists, setPlaylist }) {
 const mapDispatchToProps = (dispatch) => ({
   fetchPlaylists: (playlistName) =>
     dispatch(fetchPlaylists(playlistName, INPUT_DELAY)),
-  setPlaylist: (playlistId) => dispatch(setPlaylist(playlistId)),
+  fetchPlaylistItems: (playlistId) => dispatch(fetchPlaylistItems(playlistId)),
 });
 
 export default connect(null, mapDispatchToProps)(Search);

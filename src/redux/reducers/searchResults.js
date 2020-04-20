@@ -11,16 +11,17 @@ const initialState = {
   loading: false,
   timestamp: 0,
   data: [],
-  active: null,
+  active: {
+    title:'Nothing selected yet',
+    views:[]
+  },
 };
 
 export default (prevState = initialState, action) => {
   const newState = _.cloneDeep(prevState);
   switch (action.type) {
     case SET_PLAYLIST: {
-      newState.active = prevState.data.find(
-        playlist => playlist.id.playlistId === action.playlistId
-      );
+      newState.active = {title:action.title, views:action.views}
       return newState;
     }
     case SET_DATE: {
