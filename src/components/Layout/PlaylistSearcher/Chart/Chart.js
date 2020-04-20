@@ -1,18 +1,37 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
 // import {  } from '../../../../redux/actions/creators';
 
-import cssClasses from './Chart.module.css';
+import Graph from "./Graph/Graph";
+import Spinner from "../../../UI/Spinner/Spinner";
 
-function Chart({}){
-    return(<div className={cssClasses.Chart}>
+import cssClasses from "./Chart.module.css";
 
-    </div>)
+function Chart({ playlist }) {
+  return (
+    <div className={cssClasses.Chart}>
+      {playlist.title === null ? (
+        <Spinner />
+      ) : (
+        <React.Fragment>
+          <p>{playlist.title}</p>
+          <div className={cssClasses.Graph}>
+            <Graph
+              data={playlist.views.map((view, index) => ({
+                x: index + 1,
+                y: +view,
+              }))}
+            />
+          </div>
+        </React.Fragment>
+      )}
+    </div>
+  );
 }
 
-const mapStateToProps=state=>({
-    playlist:state.searchResults.active
-})
+const mapStateToProps = (state) => ({
+  playlist: state.searchResults.active,
+});
 
 export default connect(mapStateToProps)(Chart);

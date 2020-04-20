@@ -12,7 +12,7 @@ const initialState = {
   timestamp: 0,
   data: [],
   active: {
-    title:'Nothing selected yet',
+    title:null,
     views:[]
   },
 };
