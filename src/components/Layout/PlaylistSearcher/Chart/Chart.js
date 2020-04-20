@@ -9,13 +9,17 @@ import Spinner from "../../../UI/Spinner/Spinner";
 import cssClasses from "./Chart.module.css";
 
 function Chart({ playlist }) {
+  let title = playlist.title;
+  if (playlist.views.length === 30) {
+    title += " (first 30)";
+  }
   return (
     <div className={cssClasses.Chart}>
       {playlist.title === null ? (
         <Spinner />
       ) : (
         <React.Fragment>
-          <p className={cssClasses.Title}>{playlist.title}</p>
+          <p className={cssClasses.Title}>{title}</p>
           <div className={cssClasses.Graph}>
             <Graph
               data={playlist.views.map((view, index) => ({

@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+  AreaChart, Area, XAxis, YAxis, Tooltip,
 } from 'recharts';
 
 export default ({data})=>{
@@ -13,7 +13,7 @@ export default ({data})=>{
           top: 0, right: 0, left: 0, bottom: 0,
         }}
       >
-        <XAxis dataKey="x" stroke="#65ebeb"/>
+        <XAxis tickLine={false} dataKey="x" stroke="#65ebeb" />
         <YAxis hide type="number" allowDataOverflow={true} />
         <Tooltip />
         <Area type="monotone" dataKey="y" stroke="#65ebeb" fill="#65ebeb" />
