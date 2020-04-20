@@ -16,15 +16,15 @@ function Chart({ playlist }) {
   return (
     <div className={cssClasses.Chart}>
       {playlist.title === null ? (
-        <Spinner />
+        <Spinner color='blue' />
       ) : (
         <React.Fragment>
           <p className={cssClasses.Title}>{title}</p>
           <div className={cssClasses.Graph}>
             <Graph
-              data={playlist.views.map((view, index) => ({
+              data={playlist.views.map((views, index) => ({
                 x: index + 1,
-                y: +view,
+                views: +views,
               }))}
             />
           </div>

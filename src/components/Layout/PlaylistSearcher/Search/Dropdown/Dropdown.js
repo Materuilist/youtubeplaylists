@@ -3,12 +3,17 @@ import { connect } from "react-redux";
 import CSSTransition from "react-transition-group/CSSTransition";
 
 import cssClasses from "./Dropdown.module.css";
+import Spinner from "../../../../UI/Spinner/Spinner";
 
-function Dropdown({ playlists, choiceMadeHandler, show }) {
+function Dropdown({ playlists, choiceMadeHandler, show, isLoading }) {
   return (
     <CSSTransition in={show} timeout={0} mountOnEnter unmountOnExit>
       <ul className={cssClasses.Dropdown}>
-        {playlists.length !== 0 ? (
+        {isLoading ? (
+          <li>
+            <Spinner color='red' />
+          </li>
+        ) : playlists.length !== 0 ? (
           playlists.map(({ title, key }) => (
             <li onClick={choiceMadeHandler.bind(null, key)} key={key}>
               {title}

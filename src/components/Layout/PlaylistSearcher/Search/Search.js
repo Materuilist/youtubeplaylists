@@ -11,7 +11,7 @@ import Dropdown from "./Dropdown/Dropdown";
 
 const INPUT_DELAY = 1000;
 
-function Search({ fetchPlaylists, fetchPlaylistItems }) {
+function Search({ fetchPlaylists, fetchPlaylistItems, isLoading }) {
   const searchInput = useRef();
   const [dropdownIsShown, toggleDropdownVisibility] = useState(false);
 
@@ -34,6 +34,9 @@ function Search({ fetchPlaylists, fetchPlaylistItems }) {
       <div onClick={inputClickedHandler} className={cssClasses.Search}>
         <span className={cssClasses.SearchIcon}>&#9906;</span>{" "}
         <input
+          onKeyDown={() => {
+            if (!dropdownIsShown) toggleDropdownVisibility(true);
+          }}
           onInput={inputHandler}
           ref={searchInput}
           type="text"
@@ -42,6 +45,7 @@ function Search({ fetchPlaylists, fetchPlaylistItems }) {
         />
       </div>
       <Dropdown
+        isLoading={isLoading}
         show={dropdownIsShown}
         choiceMadeHandler={choiceMadeHandler}
       />
@@ -49,10 +53,14 @@ function Search({ fetchPlaylists, fetchPlaylistItems }) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  isLoading: state.searchResults.loading,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   fetchPlaylists: (playlistName) =>
     dispatch(fetchPlaylists(playlistName, INPUT_DELAY)),
   fetchPlaylistItems: (playlistId) => dispatch(fetchPlaylistItems(playlistId)),
 });
 
-export default connect(null, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

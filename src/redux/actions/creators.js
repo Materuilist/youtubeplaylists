@@ -62,14 +62,15 @@ export function fetchPlaylists(playlistName, delay) {
   return async (dispatch, getState) => {
     const date = Date.now();
     dispatch(setDate(date));
+    const { loading } = getState().searchResults;
+    if (!loading) {
+      dispatch(toggleLoading());
+    }
     await new Promise((resolve) => setTimeout(() => resolve(), delay));
-    const { loading, timestamp } = getState().searchResults;
+    const { timestamp } = getState().searchResults;
     //устаревший запрос
     if (date < timestamp) {
       return;
-    }
-    if (!loading) {
-      dispatch(toggleLoading());
     }
     const res = await fetch(
       "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDAhOBa7cZ-KrkW2hAWoBsOBVqVBZ52lHo&part=snippet&type=playlist&order=viewCount&maxResults=7&q=" +
